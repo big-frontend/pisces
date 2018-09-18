@@ -1,6 +1,0 @@
-println("settings start")
-if (!isComponentMode.toBoolean()) {
-    include ':app'
-}
-include ':location'
-println("settings end")

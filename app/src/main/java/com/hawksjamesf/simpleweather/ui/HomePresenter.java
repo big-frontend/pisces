@@ -27,5 +27,24 @@ public class HomePresenter extends RxPresenter<HomeActivity> implements HomeCont
 //                .all(map)
 //                .subscribeOn(Schedulers.io())
 //                .observeOn()
+
+
+//        RxLocation
+//                .requestLocation(RxLocation.GPS|RxLocation.NETWORK,minTime,minDistance)
+//
+//
+//        adfa= RxLocation.requestSingleShot(gsp)
+//                .callback(
+//                        location->
+//                        ,
+//                        (provider,status,bundle)->
+//
+//                        ,
+//                        provider->
+//                        ,
+//                        provider ->
+//
+//                );
+//        RxLocation.remove(adfa);
     }
 }

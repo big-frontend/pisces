@@ -63,3 +63,11 @@ app/src/main/.DS_Store
 /viewpagerindicator_library/viewpagerindicator_library.iml
 .idea
 viewpagerindicator_library
+.settings/org.eclipse.buildship.core.prefs
+app/.settings/org.eclipse.buildship.core.prefs
+app/.classpath
+app/.project
+location/.settings/org.eclipse.buildship.core.prefs
+location/.classpath
+location/.project
+.project
