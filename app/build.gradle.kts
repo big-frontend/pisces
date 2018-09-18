@@ -1,8 +1,8 @@
 println("app start")
 //apply plugin: 'com.android.application'
-plugins {
-    id("com.android.application")
-    kotlin("android")
+apply {
+    plugin("com.android.application")
+    plugin("kotlin-android")
 }
 
 android {
@@ -30,27 +30,32 @@ android {
 //            buildConfigField("String", "BASE_URL", '"https://weatherapi.market.xiaomi.com"')
 //        }
 //    }
-    compileSdkVersion(27)
-    buildToolsVersion("27.0.2")
+//    compileSdkVersion(27)
+//    buildToolsVersion("27.0.2")
 
-    defaultConfig {
-        applicationId = "com.youngfeng.kotlindsl"
-        minSdkVersion(15)
-        targetSdkVersion(27)
-        versionCode = 1
-        versionName = "1.0"
-        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
-    }
+//    defaultConfig {
+//        applicationId = "com.youngfeng.kotlindsl"
+//        minSdkVersion(15)
+//        targetSdkVersion(27)
+//        versionCode = 1
+//        versionName = "1.0"
+//        testInstrumentationRunner = "android.support.test.runner.AndroidJUnitRunner"
+//    }
 
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = true
-            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+//    buildTypes {
+//        getByName("release") {
+//            isMinifyEnabled = true
+//            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
+//        }
+//    }
+    sourceSets {
+        getByName("main") {
+            java.srcDirs("src/main/kotlin")
         }
     }
 }
 
-//dependencies {
+dependencies {
 //    implementation fileTree (include: ['*.jar'], dir: 'libs')
 //    implementation 'com.jakewharton:butterknife:8.8.1'
 //    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
@@ -81,5 +86,6 @@ android {
 //    implementation "com.android.support:design:${rootProject.ext.supportLibraryVersion}"
 //    implementation "com.android.support:recyclerview-v7:${rootProject.ext.supportLibraryVersion}"
 //    implementation project (path: ':location')
-//}
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jre7:1.2.21")
+}
 println("app end")

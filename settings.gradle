@@ -1,7 +1,7 @@
 println("settings start")
 //if (!isComponentMode.toBoolean()) {
 //}
-include("app")
+rootProject.buildFileName = 'build.gradle.kts'
+include ':app'
 //include ':location'
-rootProject.buildFileName = "build.gradle.kts"
 println("settings end")

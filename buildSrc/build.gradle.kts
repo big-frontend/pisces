@@ -22,21 +22,23 @@ apply {
 buildscript {
 
     repositories {
-        gradlePluginPortal()
+//        gradlePluginPortal()
+        gradleScriptKotlin()
     }
 
     dependencies {
-        classpath(kotlin("gradle-plugin", "1.2.21"))
+        classpath(kotlinModule("gradle-plugin"))
+//        classpath(kotlin("gradle-plugin", "1.2.21"))
     }
 }
 
 dependencies {
-    implementation(gradleKotlinDsl())
-    implementation(kotlin("stdlib", "1.2.21"))
-    implementation(gradleApi())
-    implementation(localGroovy())
+    compile(gradleKotlinDsl())
+    compile(kotlin("stdlib", "1.2.21"))
+    compile(gradleApi())
+    compile(localGroovy())
 }
-
 repositories {
-    gradlePluginPortal()
+//    gradlePluginPortal()
+    gradleScriptKotlin()
 }
