@@ -1,4 +1,4 @@
-object rootProject {
+object deps {
     //ext {
 //    compileSdkVersion = 26
 //    buildToolsVersion = '27.0.0'
@@ -38,6 +38,7 @@ object rootProject {
         val targetSdkVersion = 26
         val versionCode = 2
         val versionName = "2.0"
+        val kotlinVersion = "1.2.31"
 
         //    // App dependencies
         val supportLibraryVersion = "27.0.2"
@@ -50,6 +51,7 @@ object rootProject {
         val runnerVersion = "1.0.0"
         val mockitoVersion = "1.10.19"
         val hamcrestVersion = "1.3"
+        val roomVersion = "1.1.1"
 
         object support {
             val compat = "com.android.support:appcompat-v7:27.0.2"

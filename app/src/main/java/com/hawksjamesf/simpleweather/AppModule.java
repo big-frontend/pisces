@@ -25,7 +25,7 @@ public class AppModule {
     @Provides
     Retrofit provideRetrofit(){
         return new Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL)
+                .baseUrl("https://weatherapi.market.xiaomi.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }

@@ -71,3 +71,4 @@ location/.settings/org.eclipse.buildship.core.prefs
 location/.classpath
 location/.project
 .project
+.DS_Store
