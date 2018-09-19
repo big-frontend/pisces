@@ -33,23 +33,23 @@ object rootProject {
     object ext {
 
         val compileSdkVersion = 26
-        val buildToolsVersion = '27.0.0'
+        val buildToolsVersion = "27.0.0"
         val minSdkVersion = 17
         val targetSdkVersion = 26
         val versionCode = 2
         val versionName = "2.0"
 
         //    // App dependencies
-        val supportLibraryVersion = '27.0.2'
-        val rxjavaVersion = '2.1.10'
-        val rxandroidVersion = '1.2.1'
-        val junitVersion = '4.12'
-        val glideVersion = '3.7.0'
-        val retrofitVersion = '2.3.0'
-        val espressoVersion = '3.0.1'
-        val runnerVersion = '1.0.0'
-        val mockitoVersion = '1.10.19'
-        val hamcrestVersion = '1.3'
+        val supportLibraryVersion = "27.0.2"
+        val rxjavaVersion = "2.1.10"
+        val rxandroidVersion = "1.2.1"
+        val junitVersion = "4.12"
+        val glideVersion = "3.7.0"
+        val retrofitVersion = "2.3.0"
+        val espressoVersion = "3.0.1"
+        val runnerVersion = "1.0.0"
+        val mockitoVersion = "1.10.19"
+        val hamcrestVersion = "1.3"
 
         object support {
             val compat = "com.android.support:appcompat-v7:27.0.2"
