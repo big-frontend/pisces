@@ -31,6 +31,10 @@ versionPluginForKotlin {
     fileFormat = "sadfasd"
 }
 
+apply plugin: 'com.tencent.tinker.patch'
+//apply from: 'tinker-support-bugly.gradle'
+apply from: 'tinker-support-thinkerpatch.gradle'
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -116,6 +120,13 @@ dependencies {
     // Android Testing Support Library's runner and rules
     androidTestImplementation "com.android.support.test:runner:${rootProject.ext.runnerVersion}"
     androidTestImplementation "com.android.support.test:rules:${rootProject.ext.rulesVersion}"
+
+    //optional, help to generate the final application
+    annotationProcessor "com.tencent.tinker:tinker-android-anno:${TINKER_VERSION}"
+    compileOnly "com.tencent.tinker:tinker-android-anno:${TINKER_VERSION}"
+    //tinker's main Android lib
+//    api "com.tencent.tinker:tinker-android-lib:${TINKER_VERSION}"
+    implementation "com.tinkerpatch.sdk:tinkerpatch-android-sdk:1.2.8"
 
 }
 println("app end")

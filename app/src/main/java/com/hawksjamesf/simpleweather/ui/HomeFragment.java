@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hawksjamesf.simpleweather.R;
-import com.hawksjamesf.simpleweather.SimpleWeatherApplication;
+import com.hawksjamesf.simpleweather.SimpleWeatherApplicationLike;
 import com.hawksjamesf.simpleweather.bean.RealTimeBean;
 import com.hawksjamesf.simpleweather.bean.fifteendaysbean.SkyConBean;
 import com.hawksjamesf.simpleweather.bean.fifteendaysbean.TempeBean;
@@ -89,7 +89,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SimpleWeatherApplication.getAppComponent().inject(this);
+        SimpleWeatherApplicationLike.getAppComponent().inject(this);
 //        EventBus.getDefault().register(this);
 
         mAdapter = new RefreshAdapter(mActivity);

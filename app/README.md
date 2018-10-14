@@ -5,3 +5,7 @@
 testImplementation : adds dependency for test source set
 androidTestImplementation : adds dependency for androidTest source set
 ```
+
+tinker patch部署平台：
+- bugly
+- tinker patch platform

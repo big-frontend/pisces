@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hawksjamesf.simpleweather.R;
-import com.hawksjamesf.simpleweather.SimpleWeatherApplication;
+import com.hawksjamesf.simpleweather.SimpleWeatherApplicationLike;
 import com.hawksjamesf.simpleweather.bean.ListRes;
 import com.hawksjamesf.simpleweather.bean.WeatherData;
 import com.hawksjamesf.simpleweather.network.WeatherAPIInterface;
@@ -58,8 +58,8 @@ public class HomeActivity extends RxActivity<HomePresenter> implements HomeContr
 
 
 
-        SimpleWeatherApplication.getAppComponent().inject(this);
 
+        SimpleWeatherApplicationLike.getAppComponent().inject(this);
         api.getCurrentWeatherDate("Shanghai")
                 .subscribe(new Consumer<Response<WeatherData>>() {
                     @Override
