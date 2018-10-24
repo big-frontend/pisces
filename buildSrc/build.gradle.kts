@@ -7,7 +7,7 @@ import org.jetbrains.kotlin.cli.jvm.main
 //}
 
 plugins {
-//    `kotlin-dsl`
+    //    `kotlin-dsl`
 //    id("java-gradle-plugin")
     `java-gradle-plugin`
 //    id("org.gradle.kotlin.kotlin-dsl") version("1.0-rc-10")
@@ -21,18 +21,23 @@ buildscript {
 
     repositories {
         jcenter()
-        google()
+//        google()
         mavenCentral()
-    }
+        maven("https://maven.fabric.io/public")
+        maven(" https://maven.google.com") {
+            name = "Google"
 
-    dependencies {
-        classpath(kotlin("gradle-plugin", "1.2.71"))
+        }
+
+        dependencies {
+            classpath(kotlin("gradle-plugin", "1.2.71"))
 //        classpath("com.android.tools.build:gradle:3.2.0")
+        }
     }
 }
 
 sourceSets {
-//    main.kotlin.srcDirs="src/main/kotlin"
+    //    main.kotlin.srcDirs="src/main/kotlin"
 //    main {
 //        java {
 //            srcDirs = ['src/main/util/']
@@ -71,8 +76,12 @@ dependencies {
 
 repositories {
     jcenter()
-    google()
+//    google()
     mavenCentral()
+    maven("https://maven.fabric.io/public")
+    maven("https://maven.google.com") {
+        name = "Google"
+    }
 }
 
 
