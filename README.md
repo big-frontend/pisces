@@ -16,7 +16,7 @@ master branch : [![Build Status](https://travis-ci.org/HawksJamesf/SimpleWeather
 - [ ] 模块设计之通用工具(kotlin & Java)
 - [ ] 模块设计之定位系统
 - [x] 模块设计之登入模块
-
+- [x] 解耦：高内聚低耦合
 ## Android Project
 app
 
