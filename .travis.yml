@@ -58,8 +58,8 @@ before_cache:
 #  - master
 #  - stable
 
-sudo: required
+#sudo: required
 
-services:
-- docker
+#services:
+#- docker
 

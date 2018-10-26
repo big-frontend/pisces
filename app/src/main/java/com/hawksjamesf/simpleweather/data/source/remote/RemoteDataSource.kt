@@ -2,11 +2,9 @@ package com.hawksjamesf.simpleweather.data.source.remote
 
 import com.hawksjamesf.simpleweather.BuildConfig
 import com.hawksjamesf.simpleweather.data.bean.ListRes
-import com.hawksjamesf.simpleweather.data.bean.WeatherData
+import com.hawksjamesf.simpleweather.data.bean.home.WeatherData
+import com.hawksjamesf.simpleweather.data.bean.login.*
 import com.hawksjamesf.simpleweather.data.source.DataSource
-import com.hawksjamesf.simpleweather.network.ObservableOrMainCallAdapterFactory
-import com.hawksjamesf.simpleweather.network.URLInterceptor
-import com.hawksjamesf.simpleweather.network.WeatherAPIInterface
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -47,15 +45,30 @@ object RemoteDataSource : DataSource {
                 .create(WeatherAPIInterface::class.java)
 
     }
+
     override fun getCurrentWeatherDate(city: String): Single<WeatherData> {
         return api.getCurrentWeatherDate(city)
 
     }
 
     override fun getFiveData(city: String): Observable<ListRes<WeatherData>> {
-        return   api.getFiveData(city)
+        return api.getFiveData(city)
 
     }
 
+    override fun sendCode(sendCodeReq: SendCodeReq): Single<SendCodeResp> {
+        return api.sendCode(sendCodeReq)
+    }
 
+    override fun signUp(signUpReq: SignUpReq): Single<Profile> {
+        return api.signUp(signUpReq)
+    }
+
+    override fun signIn(loginReq: SignInReq): Single<Profile> {
+        return api.login(loginReq)
+    }
+
+    override fun signOut() {
+
+    }
 }

@@ -1,14 +1,18 @@
 package com.hawksjamesf.simpleweather.data.source.mock;
 
 import android.content.Context
+import android.widget.Toast
 import com.google.gson.*
 import com.google.gson.reflect.TypeToken
 import com.hawksjamesf.simpleweather.data.bean.ListRes
-import com.hawksjamesf.simpleweather.data.bean.WeatherData
+import com.hawksjamesf.simpleweather.data.bean.home.WeatherData
+import com.hawksjamesf.simpleweather.data.bean.login.*
 import com.hawksjamesf.simpleweather.data.source.DataSource
 import com.hawksjamesf.simpleweather.util.RestServiceTestHelper
+import com.orhanobut.logger.Logger
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
 import org.joda.time.DateTime
 import org.joda.time.format.ISODateTimeFormat
 import java.lang.reflect.Type
@@ -24,11 +28,18 @@ import java.util.concurrent.TimeUnit
  * @since: Oct/22/2018  Mon
  */
 class MockDataSource(
-        private val context: Context,
-        private val uncertaintyParams: UncertaintyParams = UncertaintyParams()
+        private val mContext: Context,
+        private val mUncertaintyParams: UncertaintyParams = UncertaintyParams()
 ) : DataSource {
 
-    var gson: Gson
+    private var mGson: Gson
+    private val mStore: Store = Store()
+    private val TAG = "Server"
+
+    data class Store(
+            var records: MutableList<Record> = mutableListOf()
+    )
+
 
     /*
     SHORT is completely numeric, such as 12.13.52 or 3:30pm
@@ -79,19 +90,66 @@ class MockDataSource(
 //                return false
 //            }
 //        })
-        gson = gsonBuilder.create()
+        mGson = gsonBuilder.create()
+
+        val testAccount = mutableListOf(
+                Record(Profile(0, "100", "100_token", "100_refresh_token"), "123456", 1),
+                Record(Profile(1, "101", "101_token", "101_refresh_token"), "123456", 1),
+                Record(Profile(2, "102", "102_token", "102_refresh_token"), "123456", 1),
+                Record(Profile(3, "103", "103_token", "103_refresh_token"), "123456", 1)
+        )
+        mStore.records.clear()
+        mStore.records.addAll(testAccount)
     }
 
+    private fun uncertainty(): Single<Unit> {
+        return Single.just(Unit)
+                .uncertainNoConnectionError()
+                .uncertainDelay()
+                .uncertainUnknownError()
+    }
+
+
+    private fun <T> Single<T>.uncertainNoConnectionError(): Single<T> {
+        val shouldThrow = Math.random() < mUncertaintyParams.chanceOfFailingWithNoConnectionError
+        return map { if (shouldThrow) throw ClientException.NoConnection else it }
+    }
+
+    private fun <T> Single<T>.uncertainUnknownError(): Single<T> {
+        val shouldThrow = Math.random() < mUncertaintyParams.chanceOfFailingWithUnknownError
+        return map { if (shouldThrow) throw ClientException.Unknown else it }
+    }
+
+    private fun <T> Single<T>.uncertainDelay(): Single<T> {
+        val average = mUncertaintyParams.averageResponseDelayInMillis
+        val deviation = (Math.random() - 0.5) * mUncertaintyParams.responseDelayDeviationInMillis
+        val delayAmount = (average + deviation).coerceAtLeast(0.0).toLong()
+        return if (delayAmount != 0L) delay(delayAmount, TimeUnit.MILLISECONDS) else this
+    }
+
+    data class UncertaintyParams(
+
+            val chanceOfFailingWithNoConnectionError: Float = 0.0f,
+
+            val chanceOfFailingWithUnknownError: Float = 0.0f,
+
+            val averageResponseDelayInMillis: Long = 0,
+
+            val responseDelayDeviationInMillis: Long = 0
+    )
+
     /**
-     * Single<T>	只发射单个数据或错误事件,
+     * Single<T>	只发射单个数据或错误事件,SingleObserver只有onSuccess、onError
+     * Completable 只有 onComplete 和 onError 事件
+     * Maybe 可以看成是Single和Completable的结合。Maybe在没有数据发射时候subscribe会调用MaybeObserver的onComplete()，
+     *+ 如果Maybe有数据发射或者调用了onError()，是不会再执行MaybeObserver的onComplete()
      * Observable<T>	能够发射0或n个数据，并以成功或错误事件终止。
-     * 该方法对外不能提供空数据，当无数据是会调用doOnComplete
      */
     override fun getCurrentWeatherDate(city: String): Single<WeatherData> {
         return uncertainty()
                 .flatMapObservable {
                     Observable.just(
-                            gson.fromJson(RestServiceTestHelper.getStringFromFile(context, Constants.CURRENT_DATA_JSON), WeatherData::class.java)
+                            mGson.fromJson(RestServiceTestHelper.getStringFromFile(mContext, Constants.CURRENT_DATA_JSON), WeatherData::class.java)
                     )
                 }
 
@@ -109,47 +167,85 @@ class MockDataSource(
         return uncertainty()
                 .flatMapObservable {
                     Observable.just(
-                            gson.fromJson<ListRes<WeatherData>>(RestServiceTestHelper.getStringFromFile(context, Constants.FIVE_DATA_JSON), type)
+                            mGson.fromJson<ListRes<WeatherData>>(RestServiceTestHelper.getStringFromFile(mContext, Constants.FIVE_DATA_JSON), type)
                     )
                 }
                 .filter { it.city.name == city }
-                .doOnComplete { throw  Exception() }
+//                .singleElement()
+//                .doOnComplete { throw  Exception() }
+//                .ignoreElement()
 
     }
 
-    private fun uncertainty(): Single<Unit> {
-        return Single.just(Unit)
-                .uncertainNoConnectionError()
-                .uncertainDelay()
-                .uncertainUnknownError()
+    val countDown: Long = 15//TimeUnit.SECONDS
+    override fun sendCode(sendCodeReq: SendCodeReq): Single<SendCodeResp> {
+        Logger.t(TAG).d("send code--->sendCode")
+        return uncertainty()
+                .flatMapObservable { Observable.fromIterable(mStore.records) }
+                .filter { it.profile.mobile==sendCodeReq.mobile }
+                .singleElement()
+                .doOnSuccess {
+                    //Maybe：当发现服务器有该数据时，注册失败，应该给前端提供注册失败信息
+                    Logger.t(TAG).d("send code--->doOnSuccess")
+                    throw ClientException.MobileUnavaible
+
+                }
+                .ignoreElement()
+                .doOnComplete {
+                    //Completable:只会调用OnComplete和OnError
+                    Logger.t(TAG).d("send code--->doOnComplete")
+                }
+                .toSingle {
+
+                }
+                .observeOn(AndroidSchedulers.mainThread())
+                .map {
+                    val code = Random().nextInt(9999)
+                    val profileId = Random().nextInt(20)
+                    mStore.records.add(Record(Profile(profileId, sendCodeReq.mobile, null, null), "", code))
+                    Logger.t(TAG).d("send code--->map $code")
+                    Toast.makeText(mContext, "${TAG}打印的验证码为${code}", Toast.LENGTH_LONG).show()
+                    return@map SendCodeResp(1, mobile = sendCodeReq.mobile)
+                }
+
+
     }
 
+    override fun signUp(signUpReq: SignUpReq): Single<Profile> {
+        return uncertainty()
+                .flatMapObservable { Observable.fromIterable(mStore.records) }
+                .filter { it.code == signUpReq.verificationCode }
+                .map {
+                    val record = it
+                    record.profile.token = ""
+                    record.profile.refreshToken = ""
+                    record.password = signUpReq.password
+                    val indexOf = mStore.records.indexOf(it)
+                    mStore.records[indexOf] = record
+                    Logger.t(TAG).d("sign up--->record:${mStore.records[indexOf]}")
+                    record.profile
+                }
+                .singleElement()
+//                .doOnSuccess { throw ClientException.MobileUnavaible }
+//                .ignoreElement()
+                .doOnComplete { throw ClientException.VerificationCode }
+                .toSingle()
 
-    private fun <T> Single<T>.uncertainNoConnectionError(): Single<T> {
-        val shouldThrow = Math.random() < uncertaintyParams.chanceOfFailingWithNoConnectionError
-        return map { if (shouldThrow) throw Exception() else it }
     }
 
-    private fun <T> Single<T>.uncertainUnknownError(): Single<T> {
-        val shouldThrow = Math.random() < uncertaintyParams.chanceOfFailingWithUnknownError
-        return map { if (shouldThrow) throw Exception() else it }
+    override fun signIn(signinReq: SignInReq): Single<Profile> {
+        return uncertainty()
+                .flatMapObservable { Observable.fromIterable(mStore.records) }
+                .filter { it.profile.mobile == signinReq.mobile && it.password == signinReq.password }
+                .map {
+                    Logger.t(TAG).d("sign in:${it.profile}")
+                    it.profile
+                }
+                .singleElement()
+                .doOnComplete { ClientException.Unauthorized }
+                .toSingle()
     }
 
-    private fun <T> Single<T>.uncertainDelay(): Single<T> {
-        val average = uncertaintyParams.averageResponseDelayInMillis
-        val deviation = (Math.random() - 0.5) * uncertaintyParams.responseDelayDeviationInMillis
-        val delayAmount = (average + deviation).coerceAtLeast(0.0).toLong()
-        return if (delayAmount != 0L) delay(delayAmount, TimeUnit.MILLISECONDS) else this
+    override fun signOut() {
     }
-
-    data class UncertaintyParams(
-
-            val chanceOfFailingWithNoConnectionError: Float = 0.0f,
-
-            val chanceOfFailingWithUnknownError: Float = 0.0f,
-
-            val averageResponseDelayInMillis: Long = 0,
-
-            val responseDelayDeviationInMillis: Long = 0
-    )
 }
