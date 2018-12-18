@@ -1,0 +1,14 @@
+syntax = "proto3";
+package com.hawksjamesf.api;
+//option java_package = "com.hawksjamesf.api";
+//option java_outer_classname = "SignInModel";
+message SignUpReq {
+    int32 id = 1;
+    string password = 2;
+    int32 verificationCode = 3;
+}
+
+message SignInReq {
+    int32 id = 1;
+
+}

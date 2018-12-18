@@ -35,6 +35,7 @@ def getVersion() {
     [rootProject.ext.minSdkVersion, rootProject.ext.targetSdkVersion, rootProject.ext.versionCode, rootProject.ext.versionName]
 }
 
+apply plugin: "com.bmuschko.docker-remote-api"
 
 task exportVarToShell(type: Exec) {
     commandLine "${rootProject.getRootDir().getAbsolutePath()}/script/export_var.sh"

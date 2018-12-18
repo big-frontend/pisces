@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package com.hawksjamesf.api;
+//option java_package = "com.hawksjamesf.api";
+option java_outer_classname = "SignInServer";
+
+import "com/hawksjamesf/api/SignInModel.proto";
+import "com/hawksjamesf/api/Profile.proto";
+
+service ISignInService {
+    rpc signIn (SignInReq) returns (SignInReq) {
+//        option (method) = "post";
+    }
+
+}
+service ISignUpService {
+    rpc signUp (SignUpReq) returns (SignUpReq) {
+    }
+}
+
+service ISignOutService {
+}
+

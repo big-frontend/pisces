@@ -49,6 +49,10 @@ buildscript {
         kotlinVersion = "1.2.71"
         springBootVersion = '2.0.0.M7'
 
+//        grpcVersion='1.17.1'
+//        grpcVersion='1.16.1'
+        grpcVersion='1.14.0'
+//
     }
     dependencies {
         classpath "com.android.tools.build:gradle:3.2.1"
