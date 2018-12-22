@@ -18,6 +18,6 @@ fun main(args: Array<String>) {
 }
 
 class App4Kotlin {
-    fun routerFuc(): RouterFunction<ServerResponse> = router {
-    }
+//    fun routerFuc(): RouterFunction<ServerResponse> = router {
+//    }
 }

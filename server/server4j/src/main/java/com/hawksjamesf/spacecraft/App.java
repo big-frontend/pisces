@@ -1,18 +1,12 @@
 package com.hawksjamesf.spacecraft;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Repository;
-import org.springframework.web.reactive.function.server.RequestPredicates;
-import org.springframework.web.reactive.function.server.RouterFunction;
-import org.springframework.web.reactive.function.server.RouterFunctions;
-import org.springframework.web.reactive.function.server.ServerRequest;
-import org.springframework.web.reactive.function.server.ServerResponse;
 
 import java.util.Arrays;
-
-import reactor.core.publisher.Mono;
 
 /**
  * Copyright ® $ 2017
@@ -24,29 +18,45 @@ import reactor.core.publisher.Mono;
 @SpringBootApplication
 public class App {
     public static void main(String... args) {
-        System.out.println(""+ Arrays.toString(args));
+        System.out.println("" + Arrays.toString(args));
         SpringApplication.run(App.class, args);
 
     }
 
-    @Repository
-    interface UserRepo {
-        void find();
-
-        <T extends ServerResponse> Mono<T> find(ServerRequest serverRequest);
-    }
+//    @Repository
+//    interface UserRepo {
+//        void find();
+//
+//        <T extends ServerResponse> Mono<T> find(ServerRequest serverRequest);
+//    }
+//
+//    @Bean
+//    public RouterFunction<ServerResponse> routerFunction(ApplicationContext ctx) {
+////         new RouterFunction<ServerResponse>() {
+////            @Override
+////            public Mono<HandlerFunction<ServerResponse>> route(ServerRequest request) {
+////               return new RequestPredicate();
+////            }
+////        }
+////        System.out.println("hello world");
+//        return RouterFunctions.route(RequestPredicates.GET("token/"),null);
+//
+//    }
 
     @Bean
-    public RouterFunction<ServerResponse> routerFunction(UserRepo userRepo) {
-//         new RouterFunction<ServerResponse>() {
-//            @Override
-//            public Mono<HandlerFunction<ServerResponse>> route(ServerRequest request) {
-//               return new RequestPredicate();
-//            }
-//        }
-        System.out.println("hello world");
+    public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
+        return args -> {
 
-        return RouterFunctions.route(RequestPredicates.GET("token/"), userRepo::find);
+            System.out.println("Let's inspect the beans provided by Spring Boot:");
 
+            String[] beanNames = ctx.getBeanDefinitionNames();
+            Arrays.sort(beanNames);
+            for (String beanName : beanNames) {
+                System.out.println(beanName);
+            }
+
+        };
     }
+
+
 }
