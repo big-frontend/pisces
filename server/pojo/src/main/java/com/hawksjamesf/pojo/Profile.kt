@@ -1,4 +1,4 @@
-package com.hawksjamesf.api
+package com.hawksjamesf.pojo
 
 /**
  * Copyright ® $ 2017

@@ -1,5 +1,5 @@
 syntax = "proto3";
-package com.hawksjamesf.api;
+package com.hawksjamesf.pojo;
 //option java_package = "com.hawksjamesf.api";
 //option java_outer_classname = "SignInModel";
 message SignUpReq {

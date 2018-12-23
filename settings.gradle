@@ -6,5 +6,5 @@ if (!isComponentMode.toBoolean()) {
 include ':gradle_plugin'
 
 //server
-include ':server/server4j' ,':server/api'
+include ':server/server4jWeb' ,':server/api', ':server/pojo', ':server/server4jService'
 println("settings end")

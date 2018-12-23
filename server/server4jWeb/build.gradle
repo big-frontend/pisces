@@ -41,12 +41,24 @@ dependencies {
     compile project(path: ':server/api')
     api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     api "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+    //spring start
     api "org.springframework.boot:spring-boot-starter-actuator:$springBootVersion"
     api "org.springframework.boot:spring-boot-starter-webflux:$springBootVersion"
     api "org.springframework.boot:spring-boot-starter-data-jpa:$springBootVersion"
+    testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    api "org.springframework:spring-context:$springFrameworkVersion"
+    api "org.springframework:spring-beans:$springFrameworkVersion"
+    api "org.springframework:spring-webmvc:$springFrameworkVersion"
+    api "org.springframework:spring-jdbc:$springFrameworkVersion"
+    api "org.springframework:spring-aspects:$springFrameworkVersion"
+    api "org.springframework:spring-context-support:$springFrameworkVersion"
+    testCompile "org.springframework:spring-test:$springFrameworkVersion"
+    // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
+    annotationProcessor group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+    //spring end
     api "com.h2database:h2:1.4.196"
     api "io.jsonwebtoken:jjwt:0.9.0"
 
-    testCompile "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
     compile("org.springframework.boot:spring-boot-starter-actuator")
 }
