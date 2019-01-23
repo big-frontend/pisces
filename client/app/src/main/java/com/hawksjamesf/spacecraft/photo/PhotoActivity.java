@@ -1,9 +1,10 @@
 package com.hawksjamesf.spacecraft.photo;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
-import com.hawksjamesf.spacecraft.R;
 import com.hawksjamesf.common.util.BarUtil;
+import com.hawksjamesf.spacecraft.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -20,7 +21,10 @@ public class PhotoActivity extends AppCompatActivity {
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
-            BarUtil.setBarsFullscreen(PhotoActivity.this, BarUtil.LEAN_BACK);
+//            BarUtil.setBarsFullscreen(PhotoActivity.this, BarUtil.IMMERSIVE);
+//            BarUtil.setStatusBar(PhotoActivity.this);
+//            BarUtil.setStatusBarImmersive(this);
+            BarUtil.setStatusBarTransparent(this);
         }
 
     }
@@ -30,6 +34,7 @@ public class PhotoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photo);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(Color.BLUE);
         setSupportActionBar(toolbar);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 

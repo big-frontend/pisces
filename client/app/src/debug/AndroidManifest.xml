@@ -27,6 +27,7 @@
         </activity>
         <activity
             android:name="com.hawksjamesf.spacecraft.photo.PhotoActivity"
+            android:label="PhoteoActivity"
             android:theme="@style/PhotoTheme">
         </activity>
         <activity
