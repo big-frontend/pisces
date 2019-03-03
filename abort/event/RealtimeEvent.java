@@ -1,8 +1,8 @@
-package com.hawksjamesf.simpleweather.event;
+package com.hawksjamesf.spacecraft.event;
 
-import com.hawksjamesf.simpleweather.data.bean.RealTimeBean;
-import com.hawksjamesf.simpleweather.data.bean.fifteendaysbean.SkyConBean;
-import com.hawksjamesf.simpleweather.data.bean.fifteendaysbean.TempeBean;
+import com.hawksjamesf.spacecraft.data.bean.RealTimeBean;
+import com.hawksjamesf.spacecraft.data.bean.fifteendaysbean.SkyConBean;
+import com.hawksjamesf.spacecraft.data.bean.fifteendaysbean.TempeBean;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +12,7 @@ import javax.inject.Inject;
 /**
  * Copyright ® $ 2017
  * All right reserved.
- * Code Link : https://github.com/HawksJamesf/SimpleWeather
+ * Code Link : https://github.com/HawksJamesf/Spacecraft
  *  @author: hawks jamesf
  *  @since: 2017/7/4
  */

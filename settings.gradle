@@ -1,6 +1,8 @@
 println("settings start")
+include ':client/location', ':client/common', ':client/chatroom', ':client/network'
 if (!isComponentMode.toBoolean()) {
-    include ':app'
+    include ':client/app'
 }
-include ':location', ':common', ':simpleweather_gradle_plugin'
+//include ':server/server4j'
+include ':gradle_plugin'
 println("settings end")

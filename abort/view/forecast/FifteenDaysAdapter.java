@@ -1,4 +1,4 @@
-package com.hawksjamesf.simpleweather.ui.home.view.forecast;
+package com.hawksjamesf.spacecraft.ui.home.view.forecast;
 
 import android.app.Activity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,17 +8,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hawksjamesf.simpleweather.R;
-import com.hawksjamesf.simpleweather.data.bean.fifteendaysbean.SkyConBean;
-import com.hawksjamesf.simpleweather.data.bean.fifteendaysbean.TempeBean;
-import com.hawksjamesf.simpleweather.ui.home.view.forecast.older.TemperatureView;
+import com.hawksjamesf.spacecraft.R;
+import com.hawksjamesf.spacecraft.data.bean.fifteendaysbean.SkyConBean;
+import com.hawksjamesf.spacecraft.data.bean.fifteendaysbean.TempeBean;
+import com.hawksjamesf.spacecraft.ui.home.view.forecast.older.TemperatureView;
 
 import java.util.List;
 
 /**
  * Copyright ® $ 2017
  * All right reserved.
- * Code Link : https://github.com/HawksJamesf/SimpleWeather
+ * Code Link : https://github.com/HawksJamesf/Spacecraft
  *
  * @author: hawks.jamesf
  * @since: 10/15/17
