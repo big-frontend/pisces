@@ -1,0 +1,138 @@
+apply plugin: 'com.android.library'
+
+apply plugin: 'com.google.protobuf'
+
+apply plugin: 'kotlin-android'
+apply plugin: "kotlin-android-extensions"
+
+protobuf {
+    protoc {
+        // You still need protoc like in the non-Android case
+        artifact = 'com.google.protobuf:protoc:3.0.0'
+    }
+    plugins {
+        javalite {
+            // The codegen for lite comes as a separate artifact
+            artifact = 'com.google.protobuf:protoc-gen-javalite:3.0.0'
+        }
+    }
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                // In most cases you don't need the full Java output
+                // if you use the lite output.
+                remove java
+            }
+            task.plugins {
+                javalite {}
+            }
+        }
+    }
+}
+
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField('String', 'WEATHER_APP_ID', '"fb306d52c9aaff4a1ae20fbe8aa38afb"')
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        //protobuf
+        main {
+            java {
+                srcDirs += "${protobuf.generatedFilesBaseDir}/main/javalite"
+                srcDirs += "src/main/wire"
+            }
+//            proto {
+//                srcDir 'src/main/proto'
+//
+//            }
+        }
+    }
+    flavorDimensions('data_access')
+    productFlavors {
+
+        mocked {
+            dimension 'data_access'
+            buildConfigField 'boolean', 'MOCKED_DATA_ACCESS', 'true'
+            buildConfigField 'String', 'WEATHER_URL', '" "'
+        }
+//        real{
+//            dimension 'data_access'
+//            buildConfigField 'boolean','MOCKED_DATA_ACCESS','false'
+//            buildConfigField 'String','WEATHER_URL','"https://api.openweathermap.org"'
+//
+//        }
+//
+//        realLocalServer{
+//            dimension 'data_access'
+//            buildConfigField 'boolean','MOCKED_DATA_ACCESS','false'
+//            buildConfigField 'String','WEATHER_URL',"\"http://${getLocalIP()}:8080\""
+//        }
+
+    }
+}
+
+static String getLocalIP() {
+    InetAddress result = null
+    Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces()
+    while (interfaces.hasMoreElements()) {
+        Enumeration<InetAddress> addresses = interfaces.nextElement().getInetAddresses()
+        while (addresses.hasMoreElements()) {
+            InetAddress address = addresses.nextElement()
+            if (!address.isLoopbackAddress()) {
+                if (address.isSiteLocalAddress()) {
+                    return address.getHostAddress()
+                } else if (result == null) {
+                    result = address
+                }
+            }
+        }
+    }
+    return (result != null ? result : InetAddress.getLocalHost()).getHostAddress()
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    api project(path: ':client/common')
+
+    /**
+     * ===============================network start====================================
+     */
+    api "com.squareup.retrofit2:retrofit:${rootProject.ext.retrofitVersion}"
+    api "com.squareup.retrofit2:retrofit-converters:${rootProject.ext.retrofitVersion}"
+    api "com.squareup.retrofit2:converter-protobuf:${rootProject.ext.retrofitVersion}"
+    api "com.squareup.retrofit2:converter-wire:${rootProject.ext.retrofitVersion}"
+    api "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofitVersion}"
+    api "com.squareup.retrofit2:adapter-rxjava2:${rootProject.ext.retrofitVersion}"
+    api "com.squareup.retrofit2:retrofit-mock:${rootProject.ext.retrofitVersion}"
+//    api 'com.squareup.okhttp3:okhttp:3.8.1'
+    api "com.squareup.okhttp3:logging-interceptor:${rootProject.ext.okhttpLoggingVersion}"
+    api "com.squareup.okhttp3:mockwebserver:${rootProject.ext.okhttpVersion}"
+//    api 'com.google.code.gson:gson:2.8.2'
+//    api 'com.google.protobuf:protobuf-lite:3.0.0'
+
+    /**
+     * ===============================network end====================================
+     */
+    annotationProcessor "com.google.dagger:dagger-compiler:${rootProject.ext.daggerVersion}"
+}

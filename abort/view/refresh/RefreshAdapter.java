@@ -1,4 +1,4 @@
-package com.hawksjamesf.simpleweather.ui.home.view.refresh;
+package com.hawksjamesf.spacecraft.ui.home.view.refresh;
 
 import android.app.Activity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,14 +8,14 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.hawksjamesf.simpleweather.BuildConfig;
-import com.hawksjamesf.simpleweather.R;
-import com.hawksjamesf.simpleweather.data.bean.RealTimeBean;
-import com.hawksjamesf.simpleweather.data.bean.fifteendaysbean.SkyConBean;
-import com.hawksjamesf.simpleweather.data.bean.fifteendaysbean.TempeBean;
-import com.hawksjamesf.simpleweather.ui.home.view.forecast.FifteenDaysAdapter;
-import com.hawksjamesf.simpleweather.ui.home.view.forecast.FifteenDaysView;
-import com.hawksjamesf.simpleweather.util.ConditionUtils;
+import com.hawksjamesf.spacecraft.BuildConfig;
+import com.hawksjamesf.spacecraft.R;
+import com.hawksjamesf.spacecraft.data.bean.RealTimeBean;
+import com.hawksjamesf.spacecraft.data.bean.fifteendaysbean.SkyConBean;
+import com.hawksjamesf.spacecraft.data.bean.fifteendaysbean.TempeBean;
+import com.hawksjamesf.spacecraft.ui.home.view.forecast.FifteenDaysAdapter;
+import com.hawksjamesf.spacecraft.ui.home.view.forecast.FifteenDaysView;
+import com.hawksjamesf.common.util.ConditionUtils;
 import com.orhanobut.logger.Logger;
 
 import java.text.ParseException;
@@ -31,7 +31,7 @@ import static android.view.View.inflate;
 /**
  * Copyright ® $ 2017
  * All right reserved.
- * Code Link : https://github.com/HawksJamesf/SimpleWeather
+ * Code Link : https://github.com/HawksJamesf/Spacecraft
  *  @author: hawks jamesf
  *  @since: 2017/7/4
  */

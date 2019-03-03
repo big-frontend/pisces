@@ -1,4 +1,4 @@
-package com.hawksjamesf.simpleweather.ui.home.view.refresh;
+package com.hawksjamesf.spacecraft.ui.home.view.refresh;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.hawksjamesf.simpleweather.R;
+import com.hawksjamesf.spacecraft.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,7 +19,7 @@ import java.util.Date;
 /**
  * Copyright ® $ 2017
  * All right reserved.
- * Code Link : https://github.com/HawksJamesf/SimpleWeather
+ * Code Link : https://github.com/HawksJamesf/Spacecraft
  *  @author: hawks jamesf
  *  @since: 2017/7/4
  */

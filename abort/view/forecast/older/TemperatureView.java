@@ -1,4 +1,4 @@
-package com.hawksjamesf.simpleweather.ui.home.view.forecast.older;
+package com.hawksjamesf.spacecraft.ui.home.view.forecast.older;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -9,7 +9,7 @@ import android.view.View;
 /**
  * Copyright ® $ 2017
  * All right reserved.
- * Code Link : https://github.com/HawksJamesf/SimpleWeather
+ * Code Link : https://github.com/HawksJamesf/Spacecraft
  *  @author: hawks jamesf
  *  @since: 2017/7/4
  */
