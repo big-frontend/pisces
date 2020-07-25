@@ -23,21 +23,21 @@ apply plugin: 'com.google.firebase.appdistribution'
 //    buildTypeMatcher = "debug"
 //    fileFormat = '$project-$appName-$buildType-v_$versionName-c_$versionCode-time_$releaseTime'
 //}
-apply plugin: 'findbugs'
-findbugs {
-    ignoreFailures = false
-    toolVersion = "3.0.1"
-//    sourceSets=[sourceSets.main]
-    excludeFilter = file("config/findbugs/excludeFilter.xml")
-    reportsDir = file("$project.buildDir/reports/findbugs")
-    effort = "max"
-}
-tasks.withType(FindBugs) {
-    reports {
-        xml.enabled false
-        html.enabled true
-    }
-}
+//apply plugin: 'findbugs'
+//findbugs {
+//    ignoreFailures = false
+//    toolVersion = "3.0.1"
+////    sourceSets=[sourceSets.main]
+//    excludeFilter = file("config/findbugs/excludeFilter.xml")
+//    reportsDir = file("$project.buildDir/reports/findbugs")
+//    effort = "max"
+//}
+//tasks.withType(FindBugs) {
+//    reports {
+//        xml.enabled false
+//        html.enabled true
+//    }
+//}
 apply from: "${rootProject.getRootDir().getAbsolutePath()}/script/util.gradle"
 apply from: "${rootProject.getRootDir().getAbsolutePath()}/script/testlib.gradle"
 
@@ -118,6 +118,7 @@ android {
 //        vectorDrawables.useSupportLibrary = true
 //        vectorDrawables.generatedDensities = []
     }
+
     def releaseKeySet = ['RELEASE_KEY_ALIAS', 'RELEASE_STORE_PASSWORD', 'RELEASE_KEY_PASSWORD']
     def debugKeySet = ['DEBUG_KEY_ALIAS', 'DEBUG_STORE_PASSWORD', 'DEBUG_KEY_PASSWORD']
     signingConfigs {
@@ -213,6 +214,12 @@ android {
     dataBinding {
         enabled = true
     }
+//    buildFeatures {
+//        compose true
+//    }
+//    composeOptions {
+//        kotlinCompilerExtensionVersion compose_version
+//    }
     /**
      * 渠道包 start
      */
@@ -361,6 +368,19 @@ dependencies {
     annotationProcessor project(path: ':processor')
     implementation project(path: ':annotations')
     apkCheckerDependency group: "com.tencent.matrix", name: "matrix-apk-canary", version: "0.6.0", changing: true
+//    api "androidx.ui:ui-core:$compose_version"
+//    api "androidx.ui:ui-tooling:$compose_version"
+//    api "androidx.ui:ui-layout:$compose_version"
+//    api "androidx.ui:ui-material$compose_version"
+//    implementation "androidx.compose.runtime:runtime:$compose_version"
+//    implementation "androidx.compose.ui:ui:$compose_version"
+//    implementation "androidx.compose.foundation:foundation-layout:$compose_version"
+//    implementation "androidx.compose.material:material:$compose_version"
+//    implementation "androidx.compose.material:material-icons-extended:$compose_version"
+//    implementation "androidx.compose.foundation:foundation:$compose_version"
+//    implementation "androidx.compose.animation:animation:$compose_version"
+//    implementation "androidx.ui:ui-tooling:$compose_version"
+//    implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
 
 }
 apply plugin: 'com.google.gms.google-services'

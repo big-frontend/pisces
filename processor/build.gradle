@@ -17,5 +17,3 @@ dependencies {
     }
 }
 
-sourceCompatibility = "7"
-targetCompatibility = "7"
